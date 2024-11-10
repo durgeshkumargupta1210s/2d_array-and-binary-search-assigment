@@ -1,0 +1,48 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int P = sc.nextInt();
+        int L = sc.nextInt();
+        int[] arr = new int[L];
+        for(int i = 0; i<L; i++){
+            arr[i] = sc.nextInt();
+        }
+        Arrays.sort(arr);
+        System.out.println(Min_Time(arr, P));
+    }
+    public static int Min_Time(int[] arr, int P){
+        int lo = 0;
+        int hi = 1000000000;
+        int ans = 0;
+        while(lo <= hi){
+            int mid = lo + (hi-lo)/2;
+            if(isitpossible(arr, P, mid)){
+                ans = mid;
+                hi = mid - 1;
+            }
+            else{
+                lo = mid + 1;
+            }
+        }
+        return ans;
+    }
+    public static boolean isitpossible(int[] arr, int P, int mid){
+        int n = arr.length;
+        int time = 0;
+        int paratha = 0;
+        for(int i = 0; i<n; i++){
+            time = arr[i];
+            int j = 2;
+            while(time<=mid){
+                paratha++;
+                time = time + (arr[i]*j);
+                j++;
+            }
+            if(paratha >= P){
+                return true;
+            }
+        }
+        return false;
+    }
+}
